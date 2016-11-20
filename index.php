@@ -2,17 +2,23 @@
 
 const SEO_VERSION = '@SEO_VERSION@';
 
-if ($plugin_cf['seo']['check_page_headings'] && defined('XH_ADM') && XH_ADM && $edit && $s > -1) {
-    seo_check_heading_structure($l, 1, 'message_page_headings');
-}
-
-if ($plugin_cf['seo']['check_internal_headings'] && defined('XH_ADM') && XH_ADM && $edit && $s > -1) {
-    seo_check_heading_structure(seo_find_internal_heading_structure($c[$s]), $cf['menu']['levels']+1, 'message_internal_headings');
-}
-
-if (isset($seo) && $seo == 'true') {
-    $o .= print_plugin_admin('off');
-    $o .= plugin_admin_common($action, $admin, $plugin);
+if (defined('XH_ADM') && XH_ADM) {
+    if ($edit && $s > -1) {
+        if ($plugin_cf['seo']['check_page_headings']) {
+            seo_check_heading_structure($l, 1, 'message_page_headings');
+        }
+        if ($plugin_cf['seo']['check_internal_headings']) {
+            seo_check_heading_structure(
+                seo_find_internal_heading_structure($c[$s]),
+                $cf['menu']['levels']+1,
+                'message_internal_headings'
+            );
+        }
+    }
+    if (isset($seo) && $seo == 'true') {
+        $o .= print_plugin_admin('off');
+        $o .= plugin_admin_common($action, $admin, $plugin);
+    }
 }
 
 function seo_check_heading_structure(array $levels, $startlevel, $msgkey)
