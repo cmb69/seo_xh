@@ -2,6 +2,10 @@
 
 const SEO_VERSION = '@SEO_VERSION@';
 
+if ($plugin_cf['seo']['redir_enable']) {
+    seo_redirect();
+}
+
 if (defined('XH_ADM') && XH_ADM) {
     if (function_exists('XH_registerStandardPluginMenuItems')) {
         XH_registerStandardPluginMenuItems(false);
@@ -72,4 +76,68 @@ function seo_headings($html)
         },
         $html
     );
+}
+
+/*
+** Originally authored by Holger Irmler <cmsimple@holgerirmler.de>.
+*/
+function seo_redirect() 
+{
+    global $plugin_cf, $su, $u, $hjs;
+
+    $redir_permanent = $plugin_cf['seo']['redir_permanent']; // permanent redirect?
+    $force_https = $plugin_cf['seo']['redir_force_https'];   // enforce HTTPS?
+    $force_www = $plugin_cf['seo']['redir_force_www'];       // request with or without 'www.'
+    $remove_index = $plugin_cf['seo']['redir_remove_index']; // remove 'index.php'?
+
+    $parts = parse_url(CMSIMPLE_URL);
+    $scheme = $parts['scheme'];
+    $host = $parts['host'];
+    $path = $parts['path'];
+    $query_str = $_SERVER['QUERY_STRING'];
+
+    $redir = false;
+
+    // enforce HTTPS
+    if ($force_https && ($scheme == 'http')) {
+        $scheme = 'https';
+        $redir = true;
+    }
+
+    // remove 'index.php'
+    if ($remove_index) {
+        if (strtolower(substr($path, -9)) == 'index.php') {
+            $path = substr_replace($path, '', -9);
+            $redir = true;
+        }
+    }
+
+    if ($force_www) {
+        // request with 'www.'
+        if (strtolower(substr($host, 0, 4)) != 'www.') {
+            $host = 'www.' . $host;
+            $redir = true;
+        }
+    } else {
+        // remove 'www.'
+        if (strtolower(substr($host, 0, 4)) == 'www.') {
+            $host = substr_replace($host, '', 0, 4);
+            $redir = true;
+        }
+    }
+
+    // redirect if necessary
+    if ($redir) {
+        $url = $scheme . '://' . $host . $path;
+        if ($query_str != '') {
+            $url .= '?' . $query_str;
+        }
+        if ($redir_permanent) {
+            header('HTTP/1.1 301 Moved Permanently');
+        } else {
+            header('HTTP/1.1 302 Moved Temporarily');
+        }
+        header("Location: $url");
+        exit;
+    }
 }

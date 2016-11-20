@@ -13,8 +13,8 @@
     <img src="../seo.png" style="float:left; margin-right:16px" alt="Gear with SEO tag">
     <p>
         While CMSimple_XH allows to easily set up a web site, these are often not optimized for SEO
-        purposes. Seo_XH offers some tools to improve the situation. For now the plugin is concerned
-        with the structure of the headings only.
+        purposes. Seo_XH allows to drastically reduce duplicate content issues, and to have proper
+        heading structures.
     </p>
 
     <section id="requirements">
@@ -62,6 +62,24 @@ them.</p>-->
 
     <section id="usage">
         <h2>Usage</h2>
+        <section id="usage-redirections">
+            <h3>Redirections</h3>
+            <p>
+                In the plugin configuration there are several settings which allow to enforce
+                certain conventions for requesting pages of the CMSimple_XH installation to
+                partially avoid <a href="https://en.wikipedia.org/wiki/Duplicate_content">duplicate
+                content</a>. Note that it is more efficient to let the web server do these
+                redirections, though, in which case the redirections of Seo_XH should be disabled.
+            </p>
+            <p>
+                If you want to use Seo_XH's redirections, make sure to configure and test whether
+                everything works as desired while "Permanent" is disabled. <em>After</em> you're
+                finished enable "Permanent"; otherwise the duplicate content won't be avoided. Note
+                that browsers usually cache permanent redirects, so changing the settings afterwards
+                may not have the desired result; in the worst case a browser might end in an
+                infinite redirection loop.
+            </p>
+        </section>
         <section id="usage-headings">
             <h3>Heading Structure</h3>
             <p>
@@ -104,7 +122,10 @@ them.</p>-->
         </p>
         <p>
             Many thanks to the community at the <a href="http://www.cmsimpleforum.com/">CMSimple_XH
-            forum</a> for tips, suggestions and testing.
+            forum</a> for tips, suggestions and testing. Particularly, I want to thank Holger for
+            the permission to include the functionality of his <a
+            href="http://cmsimpleforum.com/viewtopic.php?f=16&t=9986&p=51385#p51385">adc plugin</a>
+            in Seo_XH. Also many thanks to frase for early feedback and testing.
         </p>
         <p>
             And last but not least many thanks to <a href="http://harteg.dk/">Peter Harteg</a>, the
