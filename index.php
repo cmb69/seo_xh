@@ -3,6 +3,9 @@
 const SEO_VERSION = '@SEO_VERSION@';
 
 if (defined('XH_ADM') && XH_ADM) {
+    if (function_exists('XH_registerStandardPluginMenuItems')) {
+        XH_registerStandardPluginMenuItems(false);
+    }
     if ($edit && $s > -1) {
         if ($plugin_cf['seo']['check_page_headings']) {
             seo_check_heading_structure($l, 1, 'message_page_headings');
