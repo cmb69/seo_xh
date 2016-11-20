@@ -7,3 +7,5 @@ $plugin_mcf['seo']['redir_permanent']="bool";
 $plugin_mcf['seo']['redir_force_https']="bool";
 $plugin_mcf['seo']['redir_force_www']="bool";
 $plugin_mcf['seo']['redir_remove_index']="bool";
+$plugin_mcf['seo']['canonical_enable']="bool";
+$plugin_mcf['seo']['canonical_include']="text";

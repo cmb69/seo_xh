@@ -5,6 +5,9 @@ const SEO_VERSION = '@SEO_VERSION@';
 if ($plugin_cf['seo']['redir_enable']) {
     seo_redirect();
 }
+if ($plugin_cf['seo']['canonical_enable']) {
+    $hjs .= seo_canonical();
+}
 
 if (defined('XH_ADM') && XH_ADM) {
     if (function_exists('XH_registerStandardPluginMenuItems')) {
@@ -140,4 +143,47 @@ function seo_redirect()
         header("Location: $url");
         exit;
     }
+}
+
+/**
+ * Returns the canonical link element
+ *
+ * @return string
+ */
+function seo_canonical()
+ {
+    global $su, $u, $function, $sitemap, $mailform, $plugin_cf;
+
+    $include = array_map('trim', explode(',', $plugin_cf['seo']['canonical_include']));
+    $include[] = 'function';
+    if ($function === 'search') {
+        $include[]  = 'search';
+    }
+    $params = $_GET;
+    if (count($params) > 0 && key($params) == $su) {
+        array_shift($params);
+    }
+    ksort($params);
+    $url = CMSIMPLE_URL;
+    if ($su != '') {
+        $query = ($su == $u[0]) ? '' : $su;
+    } elseif ($sitemap) {
+        $query = 'sitemap';
+    } elseif ($mailform) {
+        $query = 'mailform';
+    } else {
+        $query = '';
+    }
+    foreach ($params as $key => $val) {
+        if (in_array($key, $include)) {
+            $query .= "&$key";
+            if ($val !== '') {
+                $query .= "=$val";
+            }
+        }
+    }
+    if ($query != '') {
+        $url .= "?$query";
+    }
+    return tag('link rel="canonical" href="' . XH_hsc($url) . '"') . PHP_EOL;
 }

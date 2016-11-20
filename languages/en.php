@@ -9,3 +9,5 @@ $plugin_tx['seo']['cf_redir_permanent']="Whether to redirect permanently. This s
 $plugin_tx['seo']['cf_redir_force_https']="Always redirect to secure transfer protocol?";
 $plugin_tx['seo']['cf_redir_force_www']="Enabled: all requests have 'www.'; disabled: 'www.' is removed from all requests";
 $plugin_tx['seo']['cf_redir_remove_index']="Remove 'index.php' from all requests?";
+$plugin_tx['seo']['cf_canonical_enable']="Whether a canonical link element should be created.";
+$plugin_tx['seo']['cf_canonical_include']="A comma separated list of additional query parameter names which should be included in the canonical URL.";
