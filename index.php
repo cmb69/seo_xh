@@ -8,10 +8,16 @@ if ($plugin_cf['seo']['redir_enable']) {
 if ($plugin_cf['seo']['canonical_enable']) {
     $hjs .= seo_canonical();
 }
+if (function_exists('seo_slugs')) {
+    $pd_router->add_interest('seo_slug');
+}
 
 if (defined('XH_ADM') && XH_ADM) {
     if (function_exists('XH_registerStandardPluginMenuItems')) {
         XH_registerStandardPluginMenuItems(false);
+    }
+    if (function_exists('seo_slugs')) {
+        $pd_router->add_tab($plugin_tx['seo']['label_tab'], $pth['folder']['plugin'] . 'seo_tab.php');
     }
     if ($edit && $s > -1) {
         if ($plugin_cf['seo']['check_page_headings']) {

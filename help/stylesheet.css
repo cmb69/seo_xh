@@ -12,7 +12,7 @@ section {
     clear: both;
 }
 
-p {
+p, li {
     text-align: justify;
 }
 
